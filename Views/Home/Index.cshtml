@@ -1,9 +1,32 @@
-﻿@model ChillScrabble.Models.Game
-
-@{
-    ViewData["Title"] = "Chill Scrabble";
+﻿@{
+    ViewData["Title"] = "Главная страница";
+    ViewData["BodyClass"] = "main-background";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to Chill Scrabble</h1>
+<div style="height: 80vh;" class="container container-vertical" xmlns="http://www.w3.org/1999/html">
+    <div style="height: 62.5%" class="container container-horizontal">
+        <a class="button" style=" width: 40%;" href="/Home/GamePage">
+            <img src="images/with_bot_game_button.png" style="height: 100%; width: 100%"/>
+        </a>
+
+        <a class="button" style=" width: 60%;" href="/Home/GamePage">
+            <img src="images/offline_mode_button.png" style="height: 100%; width: 100%"/>
+        </a>
+    </div>
+    <div style="height: 37.5%" class="container container-horizontal">
+        <a class="button" style=" width: 62.5%;" href="/Home/GamePage">
+            <img src="images/online_mode_button.png" style="height: 100%; width: 100%"/>
+        </a>
+
+        <div style="width: 37.5%" class="container container-vertical">
+            <a class="button" style=" height: 60%;" href="/Home/GamePage">
+                <img src="images/rules_button.png" style="height: 100%; width: 100%"/>
+            </a>
+
+            <a class="button" style=" height: 40%;" href="/Home/GamePage">
+                <img src="images/settings_button.png" style="height: 100%; width: 100%"/>
+            </a>
+        </div>
+
+    </div>
 </div>

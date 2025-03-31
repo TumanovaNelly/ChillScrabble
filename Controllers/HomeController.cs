@@ -10,5 +10,10 @@ namespace ChillScrabble.Controllers
             var game = new Game();
             return View(game);
         }
+
+        public IActionResult GamePage()
+        {
+            return View();
+        }
     }
 }
