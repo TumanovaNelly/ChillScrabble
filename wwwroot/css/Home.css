@@ -1,0 +1,32 @@
+﻿.container {
+    display: flex;
+    gap: 3vh;
+}
+
+.container-vertical {
+    flex-direction: column;
+}
+
+.container-horizontal {
+    flex-direction: row;
+}
+
+.container-button {
+    background-color: lightgray;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+}
+
+button {
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
