@@ -1,16 +1,17 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/site.css" />
+    
+    <link rel="stylesheet" href="~/css/Site.css"/>
+    @Html.Raw(CssHelper.RenderControllerSpecificCss(ViewContext))
 </head>
-<body>
-<div class="container">
-    @RenderBody()
-</div>
 
-<script src="~/js/site.js"></script>
+<body class=@ViewData["BodyClass"]>
+    @RenderBody()
 </body>
+
 </html>
