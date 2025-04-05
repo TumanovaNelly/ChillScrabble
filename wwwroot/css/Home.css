@@ -11,22 +11,10 @@
     flex-direction: row;
 }
 
-.container-button {
-    background-color: lightgray;
-}
-
-img {
-    height: 100%;
-    width: 100%;
-}
-
-button {
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: white;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.button {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 0.3vh solid black;
+    border-radius: 3vh;
 }
