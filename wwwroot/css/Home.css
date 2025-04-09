@@ -15,6 +15,22 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    position: relative;
     border: 0.3vh solid black;
     border-radius: 3vh;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+.button:hover {
+    text-shadow: 0 0 0.2vh black, 0 0 0.2vh black;
+    box-shadow: 0 0 1vh black, 0 0 1vh black;
+}
+
+.button p {
+    margin: 0;
+    -webkit-text-stroke: 0.1vh black;
+    font-size: 4vh;
+    position: absolute;
+    color: #D1401E;
 }
