@@ -14,3 +14,35 @@ body.main-background {
     background-position: bottom;
     background-repeat: no-repeat;
 }
+
+header {
+    display: flex;
+    padding-left: 3vh;
+    padding-right: 3vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.3vh solid black;
+    border-radius: 3vh;
+}
+
+header button {
+    border: 0.3vh solid black;
+    border-radius: 1vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container {
+    display: flex;
+    gap: 3vh;
+}
+
+.container-vertical {
+    flex-direction: column;
+}
+
+.container-horizontal {
+    flex-direction: row;
+}

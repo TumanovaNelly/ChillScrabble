@@ -1,17 +1,4 @@
-﻿.container {
-    display: flex;
-    gap: 3vh;
-}
-
-.container-vertical {
-    flex-direction: column;
-}
-
-.container-horizontal {
-    flex-direction: row;
-}
-
-.button {
+﻿.button {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
