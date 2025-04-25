@@ -37,3 +37,14 @@ for (let i = 0; i < 15; i++) {
         container.appendChild(cell);
     }
 }
+
+
+const slotsContainers = document.querySelectorAll('.slots');
+
+slotsContainers.forEach(slots => {
+    for (let i = 0; i < 14; i++) {
+        const slot = document.createElement('div');
+        slot.classList.add('slot');
+        slots.appendChild(slot);
+    }
+});

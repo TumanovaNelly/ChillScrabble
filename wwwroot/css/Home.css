@@ -14,9 +14,9 @@
     box-shadow: 0 0 1vh black, 0 0 1vh black;
 }
 
-.button p {
+.button h3 {
     margin: 0;
-    -webkit-text-stroke: 0.1vh black;
+    -webkit-text-stroke: 0.01vh black;
     font-size: 4vh;
     position: absolute;
     color: #D1401E;
