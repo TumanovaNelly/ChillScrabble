@@ -1,3 +1,7 @@
+p, span, div, h1, h2, h3, h4, h5, h6, a, li, label {
+    cursor: default; /* Курсор остается стандартным */
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -6,6 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     font-family: asinastra, sans-serif;
+    overflow: hidden;
 }
 
 body.main-background {
@@ -25,9 +30,10 @@ header {
     justify-content: space-between;
     border: 0.3vh solid black;
     border-radius: 3vh;
+    overflow: hidden;
 }
 
-header button {
+button {
     border: 0.3vh solid black;
     border-radius: 1vh;
     background-size: cover;
@@ -36,15 +42,24 @@ header button {
     cursor: pointer;
 }
 
-header button:hover {
-    box-shadow: 0 0 1vh black, 0 0 1vh black;
+button:hover {
+    box-shadow: 0 0 1vh red, 0 0 1vh red;
 }
 
-header h3 {
+h3 {
     margin: 0;
     -webkit-text-stroke: 0.01vh black;
     font-size: 4vh;
     color: #D1401E;
+}
+
+p {
+    font-family: asinastra, sans-serif;
+    padding: 0;
+    margin: 0;
+    font-size: 3.5vh;
+    color: #EFEFEF;
+    -webkit-text-stroke: 0.1vh black;
 }
 
 .container {
@@ -59,3 +74,4 @@ header h3 {
 .container-horizontal {
     flex-direction: row;
 }
+

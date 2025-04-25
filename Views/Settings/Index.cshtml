@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "Chill Scrabble";
+    ViewData["BodyClass"] = "main-background";
+}
+
+
+<main style="height: 90vh; " class="container container-vertical">
+    <header style="height: 10vh; padding-right: 1vh; background-image: url('/images/Settings/header.png')">
+        <button
+            style="height: 7vh; width: 7vh; background-color: transparent; background-image: url('/images/Shared/back_button.svg'); "
+            onclick="window.location.href='/'"></button>
+        <h3>SETTINGS</h3>
+        <img src="/images/Settings/gears.svg" width="85" height="85">
+    </header>
+
+    <div style="justify-content: center; padding-top: 2vh;" class="container container-vertical">
+        <div class="setting" style="height: 10vh; ">
+            <p style="margin: 2vh; ">LANGUAGE</p>
+        </div>
+
+        <div class="container container-horizontal">
+            <div class="setting" style="height: 10vh; width: 60vh;">
+                <p style="margin: 2vh; ">MUSIC</p>
+            </div>
+            <div class="setting" style="height: 10vh; width: 60vh;">
+                <p style="margin: 2vh; ">VOLUME</p>
+            </div>
+        </div>
+
+        <div class="container container-horizontal">
+            <button class="setting"
+                    style="height: 10vh; width: 65vh; margin-top: 12vh; transform: rotate(20deg); 
+                    justify-content: center; "
+                    onclick="window.location.href='/Rules'">
+                <p>BREAK THE <span class="strikethrough">GAME</span> <span style="color: #EB9F8F; ">RULES</span></p>            </button>
+        </div>
+    </div>
+
+</main>
+
+<img class="chill-guy" src="/images/Shared/chill_guy.png"/>
+
+

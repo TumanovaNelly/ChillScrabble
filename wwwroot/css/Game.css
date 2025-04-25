@@ -1,5 +1,3 @@
-
-
 .game-board {
     border: 0.3vh solid black;
     border-radius: 2vh;
@@ -38,19 +36,8 @@
 
 .player-slot h3 {
     padding-top: 3vh;
-    margin: 0;
-    font-size: 4vh;
-    color: #D1401E;
-    -webkit-text-stroke: 0.01vh black;
 }
 
-.player-slot p {
-    padding: 0;
-    margin: 0;
-    font-size: 3.5vh;
-    color: #EFEFEF;
-    -webkit-text-stroke: 0.1vh black;
-}
 
 .slots {
     display: grid;

@@ -11,13 +11,9 @@
 
 .button:hover {
     text-shadow: 0 0 0.2vh black, 0 0 0.2vh black;
-    box-shadow: 0 0 1vh black, 0 0 1vh black;
+    box-shadow: 0 0 1vh red, 0 0 1vh red;
 }
 
 .button h3 {
-    margin: 0;
-    -webkit-text-stroke: 0.01vh black;
-    font-size: 4vh;
     position: absolute;
-    color: #D1401E;
 }
