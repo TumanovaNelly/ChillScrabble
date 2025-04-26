@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "Chill Scrabble";
+    ViewData["BodyClass"] = "main-background";
+}
+
+
+<main style="height: 90vh; " class="container container-vertical">
+    <header style="height: 10vh; background-image: url('/images/Game/header_online.png')">
+        <button style="height: 7vh; width: 7vh; background-color: transparent; background-image: url('/images/Shared/back_button.svg'); "
+                onclick="window.location.href='/'"></button>
+        <h3>ONLINE MODE</h3>
+        <button style="height: 7vh; width: 7vh; background-color: transparent; background-image: url('/images/Game/menu_button.svg'); "
+                onclick="window.location.href='/'"></button>
+    </header>
+
+    <div style="height: 80vh" class="container container-horizontal">
+        <div style="justify-content: center; " class="container container-vertical">
+            <div class="bonus"></div>
+            <div class="bonus"></div>
+            <div class="bonus"></div>
+        </div>
+        
+        <div style="width: 80vh;" class="game-board">
+            <div class="board-grid"></div>
+        </div>
+        <div class="container container-vertical">
+            <div class="player-slot">
+                <div class="container container-horizontal">
+                    <img style="height: 17vh;" src="/images/Game/player_img.png">
+                    <div>
+                        <h3>CHILL_GUY1</h3>
+                        <p><strong style="font-size: 7vh; -webkit-text-stroke: 0.01vh black;">0</strong> POINTS</p>
+                    </div>
+                </div>
+                
+                <div class="slots"></div>
+            </div>
+            <div class="player-slot">
+                <div class="container container-horizontal">
+                    <img style="height: 17vh;" src="/images/Game/player_img.png">
+                    <div>
+                        <h3>CHILL_GUY2</h3>
+                        <p><strong style="font-size: 7vh; -webkit-text-stroke: 0.01vh black;">0</strong> POINTS</p>
+                    </div>
+                </div>
+
+                <div class="slots"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/Game.js"></script>
+</main>
+
+

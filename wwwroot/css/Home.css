@@ -1,32 +1,19 @@
-﻿.container {
-    display: flex;
-    gap: 3vh;
+﻿.button {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    border: 0.3vh solid black;
+    border-radius: 3vh;
+    box-sizing: border-box;
+    text-decoration: none;
 }
 
-.container-vertical {
-    flex-direction: column;
+.button:hover {
+    text-shadow: 0 0 0.2vh black, 0 0 0.2vh black;
+    box-shadow: 0 0 1vh red, 0 0 1vh red;
 }
 
-.container-horizontal {
-    flex-direction: row;
-}
-
-.container-button {
-    background-color: lightgray;
-}
-
-img {
-    height: 100%;
-    width: 100%;
-}
-
-button {
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: white;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.button h3 {
+    position: absolute;
 }

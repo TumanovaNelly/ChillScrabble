@@ -1,0 +1,33 @@
+.setting {
+    background-color: #264158;
+    border: 0.3vh solid black;
+    border-radius: 3vh;
+    display: flex;
+    align-items: center;
+}
+
+.chill-guy {
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    margin-left: 18vh;
+    height: 50vh;
+}
+
+.strikethrough {
+    position: relative;
+    display: inline-block;
+}
+
+.strikethrough::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 0.3vh; 
+    background-color: #EB9F8F; 
+    border: 0.1vh solid black; 
+    border-radius: 0.3vh;
+    transform: translateY(-50%);
+}

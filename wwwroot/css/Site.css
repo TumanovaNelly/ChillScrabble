@@ -1,3 +1,7 @@
+p, span, div, h1, h2, h3, h4, h5, h6, a, li, label {
+    cursor: default; /* Курсор остается стандартным */
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -5,7 +9,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
+    font-family: asinastra, sans-serif;
+    overflow: hidden;
 }
 
 body.main-background {
@@ -14,3 +19,59 @@ body.main-background {
     background-position: bottom;
     background-repeat: no-repeat;
 }
+
+header {
+    display: flex;
+    padding-left: 3vh;
+    padding-right: 3vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    align-items: center;
+    justify-content: space-between;
+    border: 0.3vh solid black;
+    border-radius: 3vh;
+    overflow: hidden;
+}
+
+button {
+    border: 0.3vh solid black;
+    border-radius: 1vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+button:hover {
+    box-shadow: 0 0 1vh red, 0 0 1vh red;
+}
+
+h3 {
+    margin: 0;
+    -webkit-text-stroke: 0.01vh black;
+    font-size: 4vh;
+    color: #D1401E;
+}
+
+p {
+    font-family: asinastra, sans-serif;
+    padding: 0;
+    margin: 0;
+    font-size: 3.5vh;
+    color: #EFEFEF;
+    -webkit-text-stroke: 0.1vh black;
+}
+
+.container {
+    display: flex;
+    gap: 3vh;
+}
+
+.container-vertical {
+    flex-direction: column;
+}
+
+.container-horizontal {
+    flex-direction: row;
+}
+
