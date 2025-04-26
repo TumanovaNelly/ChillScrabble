@@ -1,0 +1,11 @@
+﻿.chill-guy {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: 18vh;
+    height: 50vh;
+}
+
+p {
+    width: 100vh;
+}
