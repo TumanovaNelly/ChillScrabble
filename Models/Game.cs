@@ -11,7 +11,7 @@ public class Game
     // --------------
         
     public const int PlayersNumber = 2;
-    public List<Player> Players { get; } = new List<Player>();
+    public List<Player> Players { get; } = [];
             
     public ChipsBag Bag = new ChipsBag();
     public PlayBoard Board = new PlayBoard();
@@ -22,6 +22,5 @@ public class Game
         
         for (int i = 0; i < PlayersNumber; ++i)
             Players.Add(new Player($"CHILL_GUY_{i}"));
-        
     }  
 }

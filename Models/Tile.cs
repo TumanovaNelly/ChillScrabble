@@ -1,11 +1,11 @@
 ﻿namespace ChillScrabble.Models;
 
-public class Tile
+public class Tile(char letter)
 {
-    public char Letter;
-    public int Value { get; }
+    public char Letter { get; } = letter;
+    public int Value { get; } = LettersValues[letter];
 
-    private readonly Dictionary<char, int> _lettersValues = new Dictionary<char, int>
+    private static readonly Dictionary<char, int> LettersValues = new Dictionary<char, int>
     {
         ['А'] = 1, ['В'] = 1, ['Е'] = 1, ['И'] = 1, ['Н'] = 1, ['О'] = 1, ['Р'] = 1, ['С'] = 1, ['Т'] = 1,
         ['Д'] = 2, ['К'] = 2, ['Л'] = 2, ['М'] = 2, ['П'] = 2, ['У'] = 2,
@@ -16,9 +16,4 @@ public class Tile
         ['Щ'] = 10,
         ['Ъ'] = 15
     };
-
-    public Tile(char letter)
-    {
-        Value = _lettersValues[letter];
-    }
 }

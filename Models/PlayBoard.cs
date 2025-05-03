@@ -30,5 +30,9 @@ public class PlayBoard
         { Wx3, Mpt, Mpt, Lx2, Mpt, Mpt, Mpt, Wx3, Mpt, Mpt, Mpt, Lx2, Mpt, Mpt, Wx3 },
     };
 
-    public Tile[,] Tiles = new Tile[Size, Size];
+    public Tile[,] FixedTiles = new Tile[Size, Size];
+    
+    public Tile[,] NewTiles = new Tile[Size, Size];
+    
+    
 }
