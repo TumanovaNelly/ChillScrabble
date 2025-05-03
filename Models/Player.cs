@@ -1,9 +1,8 @@
-﻿namespace ChillScrabble.Models
+﻿namespace ChillScrabble.Models;
+
+public class Player(string name)
 {
-    public class Player(string name)
-    {
-        public string? Name { get; } = name;
-        public int Score { get; set; } = 0;
-        public List<Tile> Tiles { get; set; } = new List<Tile>();
-    }
+    public string? Name { get; } = name;
+    public int Score { get; set; } = 0;
+    public List<Tile> Tiles { get; set; } = new List<Tile>();
 }

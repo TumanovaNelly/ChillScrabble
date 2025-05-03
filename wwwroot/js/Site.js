@@ -1,1 +1,0 @@
-﻿console.log("Chill Scrabble is ready!");

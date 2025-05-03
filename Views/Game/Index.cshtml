@@ -3,12 +3,12 @@
 @{
     var colors = new Dictionary<int, string>
     {
-        [Game.Mid] = "#EFEFEF",
-        [Game.Mpt] = "#264158", 
-        [Game.Lx2] ="#91AF97", 
-        [Game.Lx3] = "#FEDCA0", 
-        [Game.Wx2] = "#909EA9", 
-        [Game.Wx3] = "#D1401E" 
+        [PlayBoard.Mid] = "#EFEFEF",
+        [PlayBoard.Mpt] = "#264158", 
+        [PlayBoard.Lx2] = "#91AF97", 
+        [PlayBoard.Lx3] = "#FEDCA0", 
+        [PlayBoard.Wx2] = "#909EA9", 
+        [PlayBoard.Wx3] = "#D1401E" 
     };
 
     var header = new Dictionary<int, List<string>>
@@ -41,11 +41,11 @@
         
         <div style="width: 80vh;" class="game-board">
             <div class="board-grid">
-                @for (int i = 0; i < Model.Board.GetLength(0); i++)
+                @for (int i = 0; i < PlayBoard.Size; ++i)
                 {
-                    @for (int j = 0; j < Model.Board.GetLength(1); j++)
+                    @for (int j = 0; j < PlayBoard.Size; ++j)
                     {
-                        var bonus = Model.BoardBonus[i, j];
+                        var bonus = PlayBoard.Bonuses[i, j];
                         <div class="cell" style="background-color: @colors[bonus];"></div>
                     }
                 }
