@@ -5,7 +5,7 @@ namespace ChillScrabble.Controllers;
 
 public class GameController : Controller
 {
-    private Game _game;
+    private Game? _game;
 
     public IActionResult Index(int gameMode)
     {
