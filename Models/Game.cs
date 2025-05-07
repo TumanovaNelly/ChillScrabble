@@ -17,10 +17,13 @@ public class Game
     public PlayBoard Board = new PlayBoard();
             
     public Game(int mode)
+    
     {
         Mode = mode;  //////
         
         for (int i = 0; i < PlayersNumber; ++i)
             Players.Add(new Player($"CHILL_GUY_{i}"));
+
+        Players[0].Tiles.Add(new Tile('А'));
     }  
 }

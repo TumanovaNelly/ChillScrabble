@@ -43,14 +43,21 @@
             <div class="board-grid">
                 @for (int i = 0; i < PlayBoard.Size; ++i)
                 {
-                    @for (int j = 0; j < PlayBoard.Size; ++j)
+                    for (int j = 0; j < PlayBoard.Size; ++j)
                     {
                         var bonus = PlayBoard.Bonuses[i, j];
-                        <div class="cell" style="background-color: @colors[bonus];"></div>
+                        <div 
+                            class="cell droppable" 
+                            data-row="@i" 
+                            data-col="@j" 
+                            style="background-color: @colors[bonus];"
+                        >
+                        </div>
                     }
                 }
             </div>
         </div>
+        
         <div class="container container-vertical">
             @foreach (var player in Model.Players)
             {
@@ -62,17 +69,33 @@
                             <p><strong style="font-size: 7vh; -webkit-text-stroke: 0.01vh black;">@player.Score</strong> POINTS</p>
                         </div>
                     </div>
-
+                    
                     <div class="slots">
-                        @for (int i = 0; i < 14; i++)
+                        @for (int i = 0; i < 14; ++i)
                         {
-                            <div class="slot"></div>
+                            if (i < player.Tiles.Count)
+                            {
+                                var tile = player.Tiles.ElementAt(i);
+                                <div
+                                    class="slot draggable-slot"
+                                    draggable="true"
+                                    data-letter="@tile.Letter"
+                                    data-value="@tile.Value">
+                                    @tile.Letter
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="slot empty-slot droppable"></div>
+                            }
                         }
                     </div>
                 </div>
             }
         </div>
     </div>
+    
+    <script src="/js/Game.js"></script>
 </main>
 
 
