@@ -7,7 +7,6 @@ public class HomeController : Controller
 {
     public IActionResult Index()
     {
-        var game = new Game();
-        return View(game);
+        return View();
     }
 }
