@@ -14,9 +14,35 @@
     </header>
 
     <div style="justify-content: center; padding-top: 2vh;" class="container container-vertical">
-        <div class="setting" style="height: 10vh; ">
-            <p style="margin: 2vh; ">LANGUAGE</p>
+        <!-- LANGUAGES Section with Flags -->
+        <div class="setting" style="height: 10vh; padding-right: 24vh; flex-direction: column; align-items: flex-start; width: 80%; position: relative">
+            <p style="margin: 3vh; text-transform: uppercase;">LANGUAGES</p>
+            <div style="display: flex; gap: 4vh; position: absolute; right: 4vh; top: 50%; transform: translateY(-50%);">
+                <!-- Russian Option -->
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 1.5vh 2vh;">
+                    <div style="display: flex; align-items: center; gap: 3vh; margin-right: 4vh;">
+                        <span style="font-size: 2.8vh; font-weight: bold;">RUS</span>
+                        <img src="/images/Settings/Russia.svg" width="40" height="40" style="border-radius: 30%; border: 0.25vh solid white;">
+                    </div>
+                    <label class="modern-radio-large">
+                        <input type="radio" name="language" checked>
+                        <span class="radio-checkmark"></span>
+                    </label>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 1.5vh 2vh;">
+                    <div style="display: flex; align-items: center; gap: 3vh; margin-right: 4vh;">
+                        <span style="font-size: 2.8vh; font-weight: bold;">ENG</span>
+                        <img src="/images/Settings/United_Kingdom.svg" width="40" height="40" style="border-radius: 30%; border: 0.25vh solid white;">
+                    </div>
+                    <label class="modern-checkbox">
+                        <input type="radio" name="language">
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
         </div>
+    </div>
 
         <div class="container container-horizontal">
             <div class="setting" style="height: 10vh; width: 60vh;">
@@ -35,7 +61,7 @@
                 <p>BREAK THE <span class="strikethrough">GAME</span> <span style="color: #EB9F8F; ">RULES</span></p>            
             </button>
         </div>
-    </div>
+    
 
 </main>
 
