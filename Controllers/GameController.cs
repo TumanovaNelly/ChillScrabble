@@ -1,47 +1,55 @@
-﻿using ChillScrabble.Models;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using ChillScrabble.Extensions;
+using ChillScrabble.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace ChillScrabble.Controllers;
 
-public class GameController : Controller
+public class GameController(IMemoryCache memoryCache, IWebHostEnvironment environment) : Controller
 {
-    private Game? _game;
+    private const string GameIdCookieName = "GameId";
 
     public IActionResult Index(int gameMode)
     {
-        _game = new Game(gameMode);
-
-        return View(_game);
-    }
-
-    [HttpPost]
-    public IActionResult MoveTile([FromBody] TileMoveModel model)
-    {
-        // Удаляем фишку из рук игрока
-        var player = _game.Players.FirstOrDefault(p => p.Tiles.Any(t => t.Letter == model.Letter));
-        if (player != null)
+        var gameId = Guid.NewGuid().ToString();
+        var game = new Game();
+        
+        memoryCache.Set(gameId, game, new MemoryCacheEntryOptions
         {
-            var tile = player.Tiles.FirstOrDefault(t => t.Letter == model.Letter);
-            
-            if (tile != null)
-            {
-                player.Tiles.Remove(tile);
-
-                // Размещаем фишку на игровом поле
-                _game.Board.NewTiles[model.Row, model.Col] = tile;
-
-                return Json(new { success = true });
-            }
-        }
-
-
-        return Json(new { success = false });
+            SlidingExpiration = TimeSpan.FromMinutes(30),
+            Priority = CacheItemPriority.High,
+        });
+        
+        Response.Cookies.Append(GameIdCookieName, gameId, new CookieOptions
+        {
+            Expires = DateTimeOffset.Now.AddHours(1),
+            HttpOnly = true,
+            Secure = !environment.IsDevelopment() // Правильная проверка окружения
+        });
+        
+        return View(game);
     }
-
-    public class TileMoveModel
+    
+    [HttpGet]
+    public IActionResult DealNewTiles(int playerId)
     {
-        public char Letter { get; set; }
-        public int Row { get; set; }
-        public int Col { get; set; }
+        if (!Request.Cookies.TryGetValue(GameIdCookieName, out var gameId) || string.IsNullOrEmpty(gameId))
+            return NotFound();
+        
+        if (!memoryCache.TryGetValue(gameId, out Game game) || game == null)
+            return NotFound();
+        
+        var newTiles = game.DealTiles(playerId);
+        
+        // Обновляем время жизни кэша
+        memoryCache.Set(gameId, game, TimeSpan.FromMinutes(30));
+        
+        return Json(new 
+        {
+            success = true, 
+            tiles = newTiles
+        });
     }
 }

@@ -1,5 +1,5 @@
 .setting {
-    background-color: #264158;
+    background-color: var(--dark-blue);
     border: 0.3vh solid black;
     border-radius: 3vh;
     display: flex;
@@ -26,7 +26,7 @@
     right: 0;
     top: 50%;
     height: 0.3vh; 
-    background-color: #EB9F8F; 
+    background-color: var(--pink); 
     border: 0.1vh solid black; 
     border-radius: 0.3vh;
     transform: translateY(-50%);

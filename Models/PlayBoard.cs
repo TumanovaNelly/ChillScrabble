@@ -1,5 +1,6 @@
 ﻿namespace ChillScrabble.Models;
 
+[Serializable]
 public class PlayBoard
 {
     public const int Size = 15;
@@ -11,7 +12,7 @@ public class PlayBoard
     public const int Wx2 = 22; // word value x2
     public const int Wx3 = 33; // word value x3
 
-    public static readonly int[,] Bonuses = new[,]
+    public static int[,] Bonuses { get; } =
     {
         { Wx3, Mpt, Mpt, Lx2, Mpt, Mpt, Mpt, Wx3, Mpt, Mpt, Mpt, Lx2, Mpt, Mpt, Wx3 },
         { Mpt, Wx2, Mpt, Mpt, Mpt, Lx3, Mpt, Mpt, Mpt, Lx3, Mpt, Mpt, Mpt, Wx2, Mpt },
@@ -27,12 +28,7 @@ public class PlayBoard
         { Lx2, Mpt, Mpt, Wx2, Mpt, Mpt, Mpt, Lx2, Mpt, Mpt, Mpt, Wx2, Mpt, Mpt, Mpt },
         { Mpt, Mpt, Wx2, Mpt, Mpt, Mpt, Lx2, Mpt, Lx2, Mpt, Mpt, Mpt, Wx2, Mpt, Mpt },
         { Mpt, Wx2, Mpt, Mpt, Mpt, Lx3, Mpt, Mpt, Mpt, Lx3, Mpt, Mpt, Mpt, Wx2, Mpt },
-        { Wx3, Mpt, Mpt, Lx2, Mpt, Mpt, Mpt, Wx3, Mpt, Mpt, Mpt, Lx2, Mpt, Mpt, Wx3 },
+        { Wx3, Mpt, Mpt, Lx2, Mpt, Mpt, Mpt, Wx3, Mpt, Mpt, Mpt, Lx2, Mpt, Mpt, Wx3 }
     };
 
-    public Tile[,] FixedTiles = new Tile[Size, Size];
-    
-    public Tile[,] NewTiles = new Tile[Size, Size];
-    
-    
 }

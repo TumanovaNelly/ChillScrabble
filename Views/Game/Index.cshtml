@@ -24,6 +24,8 @@
 
 
 <main style="height: 90vh; " class="container container-vertical">
+    <input type="hidden" id="gameId" value="@Context.Request.Cookies["GameId"]" />
+    
     <header style="height: 10vh; background-image: url('/images/Game/@header[Model.Mode][0]')">
         <button style="height: 7vh; width: 7vh; background-color: transparent; background-image: url('/images/Shared/back_button.svg'); "
                 onclick="window.location.href='/'"></button>
@@ -33,12 +35,15 @@
     </header>
 
     <div style="height: 80vh" class="container container-horizontal">
-        <div style="justify-content: center; " class="container container-vertical">
+        <div style="width: 10vh;" class="container container-vertical left-panel">
+            <button class="ready-button" style="height: 23vh;" id="ready-button">
+                <p>R<br/>E<br/>A<br/>D<br/>Y</p>
+            </button>
             <div class="bonus"></div>
             <div class="bonus"></div>
             <div class="bonus"></div>
         </div>
-        
+
         <div style="width: 80vh;" class="game-board">
             <div class="board-grid">
                 @for (int i = 0; i < PlayBoard.Size; ++i)
@@ -46,22 +51,23 @@
                     for (int j = 0; j < PlayBoard.Size; ++j)
                     {
                         var bonus = PlayBoard.Bonuses[i, j];
-                        <div 
-                            class="cell droppable" 
-                            data-row="@i" 
-                            data-col="@j" 
-                            style="background-color: @colors[bonus];"
-                        >
+                        <div class="board-cell"
+                             style="background-color: @colors[bonus];"
+                             data-row="@i"
+                             data-col="@j">
                         </div>
                     }
                 }
             </div>
         </div>
-        
+
         <div class="container container-vertical">
+            @{
+                int playerIndex = 0; // Переменная для нумерации игроков
+            }
             @foreach (var player in Model.Players)
             {
-                <div class="player-slot">
+                <div class="player-info">
                     <div class="container container-horizontal">
                         <img style="height: 17vh;" src="/images/Game/player_img.png">
                         <div>
@@ -69,32 +75,19 @@
                             <p><strong style="font-size: 7vh; -webkit-text-stroke: 0.01vh black;">@player.Score</strong> POINTS</p>
                         </div>
                     </div>
-                    
-                    <div class="slots">
+
+                    <div class="player-slots">
                         @for (int i = 0; i < 14; ++i)
                         {
-                            if (i < player.Tiles.Count)
-                            {
-                                var tile = player.Tiles.ElementAt(i);
-                                <div
-                                    class="slot draggable-slot"
-                                    draggable="true"
-                                    data-letter="@tile.Letter"
-                                    data-value="@tile.Value">
-                                    @tile.Letter
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="slot empty-slot droppable"></div>
-                            }
+                            <div class="slot empty-slot" data-player="@playerIndex"></div>
                         }
                     </div>
                 </div>
+                ++playerIndex;
             }
         </div>
     </div>
-    
+
     <script src="/js/Game.js"></script>
 </main>
 

@@ -1,8 +1,10 @@
+/********* Игровое поле *********/
+
 .game-board {
     border: 0.3vh solid black;
     border-radius: 2vh;
     padding: 1vh;
-    background-color: #1A2737;
+    background-color: var(--dark-blue);
 }
 
 .board-grid {
@@ -14,32 +16,34 @@
     height: 100%;
 }
 
-.cell {
+.board-cell {
     border-radius: 0.5vh;
     width: 100%;             
     height: 100%;            
     box-sizing: border-box;
 }
 
+/********* Инфо о игроке *********/
 
-.player-slot {
+.player-info {
     margin-left: 2vh;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.player-slot img {
+.player-info img {
     border-radius: 50%;
     border: 0.3vh solid black;
 }
 
-.player-slot h3 {
+.player-info h3 {
     padding-top: 3vh;
 }
 
+/* слоты */
 
-.slots {
+.player-slots {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -56,33 +60,46 @@
     align-items: center;
 }
 
-.slot.filled {
-    background-color: #ffcc00; /* Цвет фишки */
-    border: none;
-}
-
 .empty-slot {
     background-color: rgba(242, 154, 121, 0.5);
     border-color: rgba(0, 0, 0, 0.5);
     cursor: default; 
 }
 
-.draggable-slot {
-    background-color: #F29A79;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.chip {
+    background-color: var(--pink);
+}
+
+.active-chip {
     cursor: pointer;
 }
 
-.droppable {
+.active-chip p {
+    cursor: pointer;
+}
+
+.active-chip:hover {
+    box-shadow: 0 0 1vh red, 0 0 1vh red;
+}
+/********* Левая панель *********/
+
+.left-panel {
+    justify-content: center;
+    align-items: center;
 }
 
 .bonus {
-    height: 10vh;
-    width: 10vh;
+    width: 100%;
+    aspect-ratio: 1;
     border-radius: 50%;
     border: 0.3vh solid black;
-    background-color: #1A2737;
+    background-color: var(--dark-blue);
 }
+
+.ready-button {
+    background-color: var(--dark-blue);
+    width: 75%;
+    margin-bottom: 5vh;
+}
+
 
