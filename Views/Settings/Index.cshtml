@@ -48,46 +48,115 @@
     </div>
 
     <div class="container container-horizontal">
-        
-        <!-- Music Block -->
-        <div class="setting" style="height: 10vh; width: 60vh; display: flex; 
-        align-items: center; justify-content: space-between; padding: 0 2vh;">
 
-            <!-- Title on the left -->
-            <h2 style="margin: 0; font-size: 2.5vh; color: white; text-transform: uppercase;">MUSIC</h2>
+        <!-- Music Player Block -->
+        <div class="setting" style="
+    height: 10vh;
+    width: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2vh;
+">
+            <!-- Title -->
+            <h2 style="
+        margin: 0;
+        font-size: 2.5vh;
+        font-weight: bold;
+        color: white;
+        text-transform: uppercase;
+    ">MUSIC</h2>
 
-            <!-- Track controls on the right -->
+            <!-- Track Controls -->
             <div style="display: flex; align-items: center; gap: 2vh;">
-                
-                <!-- Left arrow -->
-                <button style="background: none; border: none; color: #EB9F8F;
-                font-size: 3vh; cursor: pointer; padding: 0;
-        " onclick="prevTrack()">←</button>
+                <button class="track-btn" onclick="changeTrack(-1)">←</button>
 
-                <!-- Track info -->
-                <div style="text-align: center;">
-                    <div style="
+                <div class="track-info">
+                    <div class="track-title" style="
                 font-size: 2.2vh;
                 font-weight: bold;
                 color: white;
-            ">Chill Vibes</div>
-                    <div style="
+            ">Loading...</div>
+                    <div class="track-artist" style="
                 font-size: 1.8vh;
                 color: #EB9F8F;
-            ">Reduction Studio</div>
+            "></div>
                 </div>
 
-                <!-- Right arrow -->
-                <button style="
-            background: none;
-            border: none;
-            color: #EB9F8F;
-            font-size: 3vh;
-            cursor: pointer;
-            padding: 0;
-        " onclick="nextTrack()">→</button>
+                <button class="track-btn" onclick="changeTrack(1)">→</button>
             </div>
         </div>
+        <!-- Audio Element (hidden) -->
+        <audio id="game-audio" loop></audio>
+
+        <script>
+            // Music Library
+            const musicLibrary = [
+                {
+                    title: "Chill Vibes",
+                    artist: "Reduction Studio",
+                    url: "audio/chill-vibes.mp3"
+                },
+                {
+                    title: "Lofi Dreams",
+                    artist: "Beat Collective",
+                    url: "audio/lofi-dreams.mp3"
+                },
+                {
+                    title: "Game Theme",
+                    artist: "Soundscapes",
+                    url: "audio/game-theme.mp3"
+                }
+            ];
+
+            // Player Variables
+            let currentTrackIndex = 0;
+            const audioPlayer = document.getElementById('game-audio');
+            const volumeSlider = document.querySelector('.volume-slider');
+            const volumePercent = document.querySelector('.volume-percent');
+
+            // Initialize Player
+            function initMusicPlayer() {
+                // Load first track
+                loadTrack(currentTrackIndex);
+
+                // Set up volume control
+                volumeSlider.addEventListener('input', function() {
+                    const volume = this.value / 100;
+                    audioPlayer.volume = volume;
+                    volumePercent.textContent = `${this.value}%`;
+                });
+
+                // Set initial volume
+                audioPlayer.volume = volumeSlider.value / 100;
+            }
+
+            // Load Track
+            function loadTrack(index) {
+                const track = musicLibrary[index];
+                audioPlayer.src = track.url;
+
+                document.querySelector('.track-title').textContent = track.title;
+                document.querySelector('.track-artist').textContent = track.artist;
+
+                // Auto-play if music is enabled
+                audioPlayer.play().catch(e => console.log("Auto-play prevented:", e));
+            }
+
+            // Change Track
+            function changeTrack(direction) {
+                currentTrackIndex += direction;
+
+                // Loop around if at ends
+                if (currentTrackIndex >= musicLibrary.length) currentTrackIndex = 0;
+                if (currentTrackIndex < 0) currentTrackIndex = musicLibrary.length - 1;
+
+                loadTrack(currentTrackIndex);
+            }
+
+            // Start player when page loads
+            window.addEventListener('DOMContentLoaded', initMusicPlayer);
+        </script>
         
         <!-- Volume Block -->
         <div class="setting" style="height: 10vh; width: 60vh; display: flex; align-items: center; justify-content: space-between; padding: 0 2vh;">
