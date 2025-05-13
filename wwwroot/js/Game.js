@@ -1,33 +1,103 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
     const boardCells = document.querySelectorAll(".board-cell");
     const playerSlots = document.querySelectorAll(".slot");
-    
-    boardCells.forEach((cell) => { toDraggable(cell); })
-    playerSlots.forEach((slot) => { toDraggable(slot); })
+
+    boardCells.forEach((cell) => {
+        toDraggable(cell);
+    })
+    playerSlots.forEach((slot) => {
+        toDraggable(slot);
+    })
+
+    fetchNewTiles(0);
+    fetchNewTiles(1);
 });
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const readyButton = document.getElementById("ready-button");
-    readyButton.addEventListener("click", () => { startMoving(0); });
+    readyButton.addEventListener("click", () => {
+    });
 });
+
+
+let activePlayerId = null;
+
+function fetchActivePlayer() {
+    fetch('/Game/GetActivePlayer')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                activePlayerId = data.activePlayer;
+            } else {
+                console.error("Ошибка при получении активного игрока:", data.message);
+            }
+        })
+        .catch(error => {
+            console.error("Ошибка при запросе активного игрока:", error);
+        });
+}
+
 
 function toDraggable(element) {
     element.addEventListener("dragover", (e) => {
         e.preventDefault();
-    })
+    });
 
     element.addEventListener("drop", (e) => {
         e.preventDefault();
 
-        const data = JSON.parse(e.dataTransfer.getData("text/plain"));
-        const letter = data.letter;
+        const dragData = JSON.parse(e.dataTransfer.getData("text/plain"));
+        const draggedElement = document.querySelector(`[data-id="${dragData.id}"]`);
+
+        if (!draggedElement || !e.target.classList.contains('slot') && !e.target.classList.contains('board-cell'))
+            return;
+
+        if (!canMoveTile(dragData, e.target))
+            return;
+
+        resetElementToEmpty(draggedElement);
+        fillTargetElement(e.target, dragData);
+
     });
 }
 
+function canMoveTile(dragData, targetElement) {
+    if (targetElement.classList.contains("board-cell")) {
+        return activePlayerId === null || dragData.owner === activePlayerId;
+    } else if (targetElement.classList.contains("slot")) {
+        const targetPlayerId = targetElement.dataset.player;
+
+        console.log(dragData.owner, targetPlayerId);
+        return String(dragData.owner) === targetPlayerId;
+    }
+    return false;
+}
+
+function resetElementToEmpty(element) {
+    element.innerHTML = '';
+    element.classList.remove('chip', 'active-chip');
+    toDraggable(element);
+    delete element.dataset.id;
+    delete element.dataset.letter;
+    delete element.dataset.value;
+    delete element.dataset.owner;
+}
+
+function fillTargetElement(target, dragData) {
+    target.innerHTML = `<p>${dragData.letter}</p>`;
+    target.classList.add('chip', 'active-chip');
+    toDroppable(target);
+    target.dataset.id = dragData.id;
+    target.dataset.letter = dragData.letter;
+    target.dataset.value = dragData.value;
+    target.dataset.owner = dragData.owner;
+}
 
 
+// Функция для проверки, можно ли перемещать фишку
 
-function startMoving(playerId) {
+function fetchNewTiles(playerId) {
     fetch(`/Game/DealNewTiles?playerId=${playerId}`)
         .then(response => {
             if (!response.ok) {
@@ -37,7 +107,7 @@ function startMoving(playerId) {
         })
         .then(data => {
             if (data.success && data.tiles) {
-                dealNewTiles(data.tiles, playerId);
+                drawNewTiles(data.tiles, playerId);
             } else {
                 console.error("Некорректный ответ сервера:", data);
             }
@@ -48,143 +118,48 @@ function startMoving(playerId) {
 }
 
 // Функция для раздачи новых фишек
-function dealNewTiles(tiles, playerId) {
-    const emptySlots = document.querySelectorAll(`.slot.empty-slot[data-player='${playerId}']`);
-    
+function drawNewTiles(tiles, playerId) {
+    const emptySlots = document.querySelectorAll(`.slot[data-player='${playerId}']`);
+
     tiles.forEach((tile, index) => {
         // Проверяем, есть ли свободный слот
         if (index < emptySlots.length) {
             const slot = emptySlots[index];
 
             // Обновляем содержимое слота
-            slot.innerHTML = `<span>${tile.Letter}</span>`;
-            slot.classList.remove("empty-slot"); // Убираем класс "empty-slot"
+            slot.innerHTML = `<p>${tile.Letter}</p>`;
             slot.classList.add("chip", "active-chip"); // Добавляем новые классы
 
             // Добавляем атрибуты для данных фишки
             slot.dataset.id = tile.Id;
             slot.dataset.letter = tile.Letter;
             slot.dataset.value = tile.Value;
+            slot.dataset.owner = playerId;
 
             // Делаем слот перетаскиваемым
-            slot.setAttribute("draggable", "true");
-
-            // Добавляем обработчики событий Drag and Drop
-            slot.addEventListener("dragstart", (e) => {
-                e.dataTransfer.setData("text/plain", JSON.stringify({
-                    id: e.target.dataset.id,
-                    letter: e.target.dataset.letter,
-                    value: e.target.dataset.value
-                }));
-                e.target.classList.add("dragging");
-            });
-
-            slot.addEventListener("dragend", (e) => {
-                e.target.classList.remove("dragging");
-            });
-        }
-    });
-}
-
-// Функция для обновления состояния draggable
-function updateDraggableState() {
-    const allTiles = document.querySelectorAll(".draggable");
-    allTiles.forEach(tile => {
-        // Проверяем условие (например, если фишка уже на игровом поле)
-        const parentCell = tile.parentElement;
-        if (parentCell && parentCell.classList.contains("board-cell")) {
-            tile.classList.remove("draggable");
+            toDroppable(slot);
         }
     });
 }
 
 
-//
-// 
-//     const boardCells = document.querySelectorAll('.board-cell');
-//     const emptyBoardCells = Array.from(boardCells).filter(cell => cell.classList.length === 1);
-//    
-//     const playerSlots = document.querySelectorAll('.slot');
-//     const emptyPlayerCells = Array.from(playerSlots).filter(cell => cell.classList.contains('empty-slot'));
-//     const activeChipPlayerCells = Array.from(playerSlots).filter(cell => cell.classList.contains('chip chip-active'));
-//    
-//    
-//     const draggables = document.querySelectorAll(".draggable");
-//     const droppables = document.querySelectorAll(".droppable");
-//    
-//
-//     draggables.forEach(draggable => {
-//         draggable.addEventListener("dragstart", (e) => {
-//             e.dataTransfer.setData("text/plain", JSON.stringify({
-//                 letter: e.target.dataset.letter,
-//                 value: e.target.dataset.value
-//             }));
-//             e.target.classList.add("dragging");
-//         });
-//
-//         draggable.addEventListener("dragend", (e) => {
-//             e.target.classList.remove("dragging");
-//         });
-//     });
-//
-//
-//     droppables.forEach(droppable => {
-//         droppable.addEventListener("dragover", (e) => {
-//             e.preventDefault();
-//         });
-//
-//         droppable.addEventListener("drop", (e) => {
-//             e.preventDefault();
-//
-//
-//             // Проверяем, что ячейка пуста
-//
-//             console.log("Цель:", droppable);
-//
-//             const data = JSON.parse(e.dataTransfer.getData("text/plain"));
-//             console.log("Перетаскиваемая фишка:", data);
-//
-//             const letter = data.letter;
-//
-//             const row = droppable.dataset.row; // Получаем строку
-//             const col = droppable.dataset.col; // Получаем столбец
-//            
-//             // Отправляем данные на сервер
-//             fetch('/Game/MoveTile', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify({
-//                     letter: letter,
-//                     row: parseInt(row),
-//                     col: parseInt(col)
-//                 })
-//             })
-//                 .then(response => response.json())
-//                 .then(data => {
-//                     if (data.success) {
-//                         // Изменяем класс ячейки
-//                         droppable.classList.add("filled-cell"); // Добавляем новый класс
-//                         droppable.classList.remove("droppable"); // Удаляем старый класс
-//
-//                         console.log("Цель:", droppable);
-//
-//                         // Добавляем букву в ячейку
-//                         droppable.innerHTML = `<span>${letter}</span>`;
-//
-//                         const draggingElement = document.querySelector(".dragging");
-//                         console.log(draggingElement);
-//                         if (draggingElement) {
-//                             // Заменяем содержимое на пустую ячейку
-//                             draggingElement.innerHTML = ""; // Очищаем содержимое
-//                             draggingElement.classList.remove("draggable"); // Убираем возможность перетаскивания
-//                             draggingElement.classList.add("empty-slot"); // Добавляем класс для пустой ячейки
-//                            
-//                         }
-//                     }
-//                 });
-//            
-//         });
-//     });
-// });
+function toDroppable(element) {
+    element.setAttribute("draggable", "true");
+
+    // Добавляем обработчики событий Drag and Drop
+    element.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("text/plain", JSON.stringify({
+            id: e.target.dataset.id,
+            letter: e.target.dataset.letter,
+            value: e.target.dataset.value,
+            owner: e.target.dataset.owner
+        }));
+        e.target.classList.add("dragging");
+    });
+
+    element.addEventListener("dragend", (e) => {
+        e.target.classList.remove("dragging");
+    });
+}
+
+

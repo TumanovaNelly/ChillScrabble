@@ -15,41 +15,60 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
     {
         var gameId = Guid.NewGuid().ToString();
         var game = new Game();
-        
+
         memoryCache.Set(gameId, game, new MemoryCacheEntryOptions
         {
             SlidingExpiration = TimeSpan.FromMinutes(30),
             Priority = CacheItemPriority.High,
         });
-        
+
         Response.Cookies.Append(GameIdCookieName, gameId, new CookieOptions
         {
             Expires = DateTimeOffset.Now.AddHours(1),
             HttpOnly = true,
             Secure = !environment.IsDevelopment() // Правильная проверка окружения
         });
-        
+
         return View(game);
     }
-    
+
+    [HttpGet]
+    public IActionResult GetActivePlayer()
+    {
+        var game = getGame();
+        if (game == null) return NotFound();
+
+        return Json(new { success = true, activePlayer = game.ActivePlayerIndex });
+    }
+
     [HttpGet]
     public IActionResult DealNewTiles(int playerId)
     {
-        if (!Request.Cookies.TryGetValue(GameIdCookieName, out var gameId) || string.IsNullOrEmpty(gameId))
-            return NotFound();
-        
-        if (!memoryCache.TryGetValue(gameId, out Game game) || game == null)
-            return NotFound();
-        
+        var game = getGame();
+        if (game == null) return NotFound();
+
         var newTiles = game.DealTiles(playerId);
-        
+
         // Обновляем время жизни кэша
-        memoryCache.Set(gameId, game, TimeSpan.FromMinutes(30));
-        
-        return Json(new 
+
+
+        return Json(new
         {
-            success = true, 
+            success = true,
             tiles = newTiles
         });
+    }
+
+    private Game? getGame()
+    {
+        if (!Request.Cookies.TryGetValue(GameIdCookieName, out var gameId) || string.IsNullOrEmpty(gameId))
+            return null;
+
+        if (!memoryCache.TryGetValue(gameId, out Game game) || game == null)
+            return null;
+
+        memoryCache.Set(gameId, game, TimeSpan.FromMinutes(30));
+
+        return game;
     }
 }
