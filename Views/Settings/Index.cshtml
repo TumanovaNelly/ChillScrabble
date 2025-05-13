@@ -15,45 +15,93 @@
 
     <div style="justify-content: center; padding-top: 2vh;" class="container container-vertical">
         <!-- LANGUAGES Section with Flags -->
+        
         <div class="setting" style="height: 10vh; padding-right: 24vh; flex-direction: column; align-items: flex-start; width: 80%; position: relative">
             <p style="margin: 3vh; text-transform: uppercase;">LANGUAGES</p>
             <div style="display: flex; gap: 4vh; position: absolute; right: 4vh; top: 50%; transform: translateY(-50%);">
+                
                 <!-- Russian Option -->
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 1.5vh 2vh;">
-                    <div style="display: flex; align-items: center; gap: 3vh; margin-right: 4vh;">
-                        <span style="font-size: 2.8vh; font-weight: bold;">RUS</span>
-                        <img src="/images/Settings/Russia.svg" width="40" height="40" style="border-radius: 30%; border: 0.25vh solid white;">
+                    <div style="display: flex; align-items: center; gap: 3vh; margin-right: 1vh;">
+                        <span style="font-size: 2.8vh; color: floralwhite">RUS</span>
+                        <img src="/images/Settings/Russia.svg" width="40" height="40">
                     </div>
                     <label class="modern-radio-large">
                         <input type="radio" name="language" checked>
                         <span class="radio-checkmark"></span>
                     </label>
                 </div>
-
+                <!-- English Option -->
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 1.5vh 2vh;">
-                    <div style="display: flex; align-items: center; gap: 3vh; margin-right: 4vh;">
-                        <span style="font-size: 2.8vh; font-weight: bold;">ENG</span>
-                        <img src="/images/Settings/United_Kingdom.svg" width="40" height="40" style="border-radius: 30%; border: 0.25vh solid white;">
+                    <div style="display: flex; align-items: center; gap: 3vh; margin-right: 1vh;">
+                        <span style="font-size: 2.8vh; color: floralwhite">ENG</span>
+                        <img src="/images/Settings/United_Kingdom.svg" width="40" height="40">
                     </div>
-                    <label class="modern-checkbox">
+                    <label class="modern-radio-large">
                         <input type="radio" name="language">
-                        <span class="checkmark"></span>
+                        <span class="radio-checkmark"></span>
                     </label>
                 </div>
+
             </div>
         </div>
     </div>
 
-        <div class="container container-horizontal">
-            <div class="setting" style="height: 10vh; width: 60vh;">
-                <p style="margin: 2vh; ">MUSIC</p>
-            </div>
-            <div class="setting" style="height: 10vh; width: 60vh;">
-                <p style="margin: 2vh; ">VOLUME</p>
+    <div class="container container-horizontal">
+        
+        <!-- Music Block -->
+        <div class="setting" style="height: 10vh; width: 60vh; display: flex; 
+        align-items: center; justify-content: space-between; padding: 0 2vh;">
+
+            <!-- Title on the left -->
+            <h2 style="margin: 0; font-size: 2.5vh; color: white; text-transform: uppercase;">MUSIC</h2>
+
+            <!-- Track controls on the right -->
+            <div style="display: flex; align-items: center; gap: 2vh;">
+                
+                <!-- Left arrow -->
+                <button style="background: none; border: none; color: #EB9F8F;
+                font-size: 3vh; cursor: pointer; padding: 0;
+        " onclick="prevTrack()">←</button>
+
+                <!-- Track info -->
+                <div style="text-align: center;">
+                    <div style="
+                font-size: 2.2vh;
+                font-weight: bold;
+                color: white;
+            ">Chill Vibes</div>
+                    <div style="
+                font-size: 1.8vh;
+                color: #EB9F8F;
+            ">Reduction Studio</div>
+                </div>
+
+                <!-- Right arrow -->
+                <button style="
+            background: none;
+            border: none;
+            color: #EB9F8F;
+            font-size: 3vh;
+            cursor: pointer;
+            padding: 0;
+        " onclick="nextTrack()">→</button>
             </div>
         </div>
 
-        <div class="container container-horizontal">
+
+        <!-- Volume Control -->
+        <div class="setting" style="height: 10vh; width: 60vh; display: flex; align-items: center; justify-content: space-between; padding: 0 2vh;">
+            <p style="margin: 0; font-size: 2.5vh;">VOLUME</p>
+            <div class="volume-control" style="width: 40vh;">
+                <input type="range" min="0" max="100" value="70" class="volume-slider">
+                <span class="volume-value">70%</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container container-horizontal">
             <button class="setting"
                     style="height: 10vh; width: 65vh; margin-top: 12vh; transform: rotate(20deg); 
                     justify-content: center; "
