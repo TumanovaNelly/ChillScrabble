@@ -1,5 +1,12 @@
+:root {
+    --dark-blue: #1A2737;
+    --pink: #F29A79;
+    --red: #D1401E;
+    --white: #EFEFEF;
+}
+
 p, span, div, h1, h2, h3, h4, h5, h6, a, li, label {
-    cursor: default; /* Курсор остается стандартным */
+    cursor: default; 
 }
 
 body {
@@ -42,6 +49,10 @@ button {
     cursor: pointer;
 }
 
+button p {
+    cursor: pointer;
+}
+
 button:hover {
     box-shadow: 0 0 1vh red, 0 0 1vh red;
 }
@@ -50,7 +61,7 @@ h3 {
     margin: 0;
     -webkit-text-stroke: 0.01vh black;
     font-size: 4vh;
-    color: #D1401E;
+    color: var(--red);
 }
 
 p {
@@ -58,7 +69,7 @@ p {
     padding: 0;
     margin: 0;
     font-size: 3.5vh;
-    color: #EFEFEF;
+    color: var(--white);
     -webkit-text-stroke: 0.1vh black;
 }
 
