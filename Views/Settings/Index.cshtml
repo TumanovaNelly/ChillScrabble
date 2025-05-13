@@ -88,17 +88,40 @@
         " onclick="nextTrack()">→</button>
             </div>
         </div>
-
-
-        <!-- Volume Control -->
+        
+        <!-- Volume Block -->
         <div class="setting" style="height: 10vh; width: 60vh; display: flex; align-items: center; justify-content: space-between; padding: 0 2vh;">
             <p style="margin: 0; font-size: 2.5vh;">VOLUME</p>
-            <div class="volume-control" style="width: 40vh;">
-                <input type="range" min="0" max="100" value="70" class="volume-slider">
-                <span class="volume-value">70%</span>
+            <div style="display: flex; align-items: center; gap: 2vh;">
+                <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="70"
+                    class="volume-slider"
+                    style="width: 30vh;"
+                >
+                <span class="volume-percent" style="font-size: 2.5vh; color: #EB9F8F;">70%</span>
             </div>
         </div>
     </div>
+    <script>
+        // Находим элементы после загрузки DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            const volumeSlider = document.querySelector('.volume-slider');
+            const volumePercent = document.querySelector('.volume-percent');
+
+            if (volumeSlider && volumePercent) {
+                volumeSlider.addEventListener('input', function() {
+                    volumePercent.textContent = `${this.value}%`;
+                    // Здесь можно добавить изменение громкости аудио
+                    console.log(`Громкость изменена: ${this.value}%`);
+                });
+            } else {
+                console.error('Элементы не найдены! Проверьте селекторы.');
+            }
+        });
+    </script>
 
 
     <div class="container container-horizontal">
