@@ -31,4 +31,7 @@ public class PlayBoard
         { Wx3, Mpt, Mpt, Lx2, Mpt, Mpt, Mpt, Wx3, Mpt, Mpt, Mpt, Lx2, Mpt, Mpt, Wx3 }
     };
 
+    private int _tilesOnBoard = 0;
+    
+    public bool IsBoardEmpty() => _tilesOnBoard == 0;
 }

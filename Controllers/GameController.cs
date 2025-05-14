@@ -31,6 +31,59 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
 
         return View(game);
     }
+    
+    [HttpPost]
+    public IActionResult HandleTileMove([FromBody] TileMoveRequest request)
+    {
+        var game = getGame();
+        if (game == null) return NotFound();
+        
+        try
+        {
+            switch (request.FromType, request.ToType)
+            {
+                case ("slot", "board-cell"):
+                    Console.WriteLine("Перемещение со слота на поле");
+                    if (game.Board.IsBoardEmpty())
+                        game.ActivePlayerIndex = request.PlayerId;
+                    break;
+                case ("board-cell", "slot"):
+                    Console.WriteLine("Перемещение с поля в слот");
+                    if (game.Board.IsBoardEmpty())
+                        game.ActivePlayerIndex = null;
+                    break;
+                case ("board-cell", "board-cell"):
+                    Console.WriteLine("Перемещения на поле");
+                    break;
+                default:
+                    return Json(new { success = false, message = "Недопустимый тип перемещения" });
+            }
+            
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+    
+    public class TileMoveRequest
+    {
+        public int TileId { get; set; }
+        public string FromType { get; set; } = string.Empty;  // "slot" или "board-cell"
+        public string ToType { get; set; } = string.Empty;   // "slot" или "board-cell"
+        public int PlayerId { get; set; }
+        public string Letter { get; set; } = string.Empty;
+        public int Value { get; set; }
+        public Position FromPosition { get; set; } = new();
+        public Position ToPosition { get; set; } = new();
+    }
+
+    public class Position
+    {
+        public int? X { get; set; }
+        public int? Y { get; set; }
+    }
 
     [HttpGet]
     public IActionResult GetActivePlayer()
@@ -38,7 +91,7 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
         var game = getGame();
         if (game == null) return NotFound();
 
-        return Json(new { success = true, activePlayer = game.ActivePlayerIndex });
+        return Json(new { success = true, active = game.ActivePlayerIndex });
     }
 
     [HttpGet]
@@ -48,9 +101,6 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
         if (game == null) return NotFound();
 
         var newTiles = game.DealTiles(playerId);
-
-        // Обновляем время жизни кэша
-
 
         return Json(new
         {

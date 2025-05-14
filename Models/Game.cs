@@ -16,7 +16,7 @@ public class Game
 
     public List<Player> Players { get; } = [];
 
-    public int? ActivePlayerIndex { get; private set; }
+    public int? ActivePlayerIndex { get; set; }
 
     public ChipsBag Bag { get; } = new();
     public PlayBoard Board { get; private set; } = new();
@@ -27,17 +27,6 @@ public class Game
 
         for (int i = 0; i < PlayersNumber; ++i)
             Players.Add(new Player($"CHILL_GUY_{i}"));
-    }
-
-    public void AssignActivePlayer(int index)
-    {
-        if (ActivePlayerIndex is not null) 
-            throw new NullReferenceException();
-        
-        if (index is < 0 or >= PlayersNumber)
-            throw new IndexOutOfRangeException();
-        
-        ActivePlayerIndex = index;
     }
 
     public void AssignNextActivePlayer()

@@ -15,15 +15,14 @@ namespace ChillScrabble
             {
                 options.CompactionPercentage = 0.2; 
             });
-            
 
             services.AddControllersWithViews()
                 .AddJsonOptions(options =>
                 {
+                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never; // Включаем null-поля
                     options.JsonSerializerOptions.DictionaryKeyPolicy = null; // Сохраняем оригинальные ключи
                     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                     options.JsonSerializerOptions.PropertyNamingPolicy = null; // Отключаем camelCase
-                    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 });
         }
 
