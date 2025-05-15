@@ -25,7 +25,7 @@ async function fetchActivePlayer() {
             return null;
         }
 
-        return data.active === null ? null : Number(data.active); 
+        return data.active === null ? null : Number(data.active);
     } catch (error) {
         console.error("Ошибка при запросе активного игрока:", error);
         return null;
@@ -49,19 +49,32 @@ async function handleReadyClick() {
         }
 
         const switchResult = await switchActivePlayer();
-        if (!switchResult.success) 
+        if (!switchResult.success)
             throw new Error(switchResult.message || "Ошибка смены игрока");
 
         console.log(switchResult);
 
         await fetchNewTiles(switchResult.oldActivePlayer);
-        
+
         updateActivePlayerUI(switchResult.newActivePlayer);
+        fixChipsOnBoard();
 
         alert(`Ход принят! Игрок CHILL_GUY_${switchResult.oldActivePlayer} получил новые фишки. Теперь ход игрока CHILL_GUY_${switchResult.newActivePlayer}`);
     } catch (error) {
         console.error("Error in ready button handler:", error);
-    } 
+    }
+}
+
+function fixChipsOnBoard() {
+    document.querySelectorAll('.board-cell.active-chip').forEach(chip => {
+        chip.classList.remove('active-chip');
+
+        chip.removeAttribute('draggable');
+
+        chip.ondragstart = null;
+        chip.onmouseenter = null;
+        chip.onmouseleave = null;
+    });
 }
 
 async function switchActivePlayer() {
@@ -75,9 +88,7 @@ async function switchActivePlayer() {
     return await response.json();
 }
 
-// Обновление UI для отображения активного игрока
 function updateActivePlayerUI(playerId) {
-    // Удаляем подсветку у всех игроков
     document.querySelectorAll('.player-info').forEach(el => {
         el.classList.remove('active-player');
     });
@@ -105,7 +116,7 @@ async function fetchNewTiles(playerId) {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const data = await response.json();
-        if (!data.success || !data.tiles) 
+        if (!data.success || !data.tiles)
             throw new Error(data.message || "Failed to get new tiles");
 
         drawNewTiles(data.tiles, playerId);
@@ -129,9 +140,8 @@ function toDraggable(element) {
 
             if (!await canMoveTile(dragData, e.target)) return;
 
-            if (!(draggedElement.classList.contains('slot') && e.target.classList.contains('slot'))) {
+            if (!(draggedElement.classList.contains('slot') && e.target.classList.contains('slot')))
                 await sendMoveToServer(draggedElement, e.target);
-            }
 
             resetElementToEmpty(draggedElement);
             fillTargetElement(e.target, dragData);
@@ -190,7 +200,6 @@ async function sendMoveToServer(draggedElement, toElement) {
     }
 }
 
-// Остальные функции остаются без изменений
 function drawNewTiles(tiles, playerId) {
     const emptySlots = document.querySelectorAll(`.slot[data-player='${playerId}']`);
     tiles.forEach((tile, index) => {
