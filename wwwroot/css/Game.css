@@ -45,6 +45,10 @@
     padding-top: 3vh;
 }
 
+.active-player img {
+    box-shadow: 0 0 1vh red, 0 0 1vh red;
+}
+
 /* слоты */
 
 .player-slots {

@@ -67,7 +67,8 @@
             }
             @foreach (var player in Model.Players)
             {
-                <div class="player-info">
+                <div class="player-info"
+                     data-player-id="@playerIndex">
                     <div class="container container-horizontal">
                         <img style="height: 17vh;" src="/images/Game/player_img.png">
                         <div>

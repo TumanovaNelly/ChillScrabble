@@ -2,7 +2,19 @@
 
 namespace ChillScrabble.Models;
 
-[Serializable]
+public class ValidationResult
+{
+    public ValidationResult(bool result, string message = "")
+    {
+        Success = result;
+        if (!result) 
+            ErrorMessage = message;
+    }
+    
+    public bool Success { get; set; }
+    public string ErrorMessage { get; set; } = string.Empty;
+}
+
 public class Game
 {
     // потом сделать наследование или что-то подобное (3 класса вместо одного)
@@ -41,5 +53,10 @@ public class Game
         var newTiles = Bag.GiveOutTiles(7 - Players[playerId].Tiles.Count); // заменить 7
         Players[playerId].AddTiles(newTiles);
         return newTiles;
+    }
+
+    public ValidationResult ValidateBoard()
+    {
+        return new ValidationResult(true);
     }
 }

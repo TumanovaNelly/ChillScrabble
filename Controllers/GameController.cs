@@ -84,6 +84,63 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
         public int? X { get; set; }
         public int? Y { get; set; }
     }
+    
+    [HttpPost]
+    public IActionResult ValidateBoard()
+    {
+        try
+        {
+            var game = getGame();
+            if (game == null) return NotFound();
+        
+            // Проверяем корректность текущего состояния поля
+            var validationResult = game.ValidateBoard();
+        
+            if (!validationResult.Success)
+            {
+                return Json(new { 
+                    success = false, 
+                    message = validationResult.ErrorMessage 
+                });
+            }
+        
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { 
+                success = false, 
+                message = ex.Message 
+            });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult SwitchActivePlayer()
+    {
+        try
+        {
+            var game = getGame();
+            if (game == null) return NotFound();
+            
+            var oldActive = game.ActivePlayerIndex;
+        
+            game.AssignNextActivePlayer();
+        
+            return Json(new { 
+                success = true, 
+                oldActivePlayer = oldActive,
+                newActivePlayer = game.ActivePlayerIndex 
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { 
+                success = false, 
+                message = ex.Message 
+            });
+        }
+    }
 
     [HttpGet]
     public IActionResult GetActivePlayer()

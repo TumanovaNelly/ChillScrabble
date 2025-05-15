@@ -1,9 +1,9 @@
 .setting {
-    background-color: var(--dark-blue);
     border: 0.3vh solid black;
     border-radius: 3vh;
-    display: flex;
     align-items: center;
+    background-color: var(--dark-blue);
+    padding: 0 2vh;
 }
 
 .chill-guy {
