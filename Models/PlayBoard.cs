@@ -32,6 +32,40 @@ public class PlayBoard
     };
 
     private int _tilesOnBoard = 0;
-    
+
     public bool IsBoardEmpty() => _tilesOnBoard == 0;
+
+    private Tile?[,] _newTiles = new Tile[Size, Size];
+    private Tile?[,] _fixedTiles = new Tile[Size, Size];
+
+    public void FixTiles()
+    {
+        for (int i = 0; i < Size; ++i)
+        {
+            for (int j = 0; j < Size; ++j)
+            {
+                _fixedTiles[i, j] = _newTiles[i, j];
+                _newTiles[i, j] = null;
+            }
+        }
+    }
+
+    public void PutTile(Tile tile, Tuple<int, int> position)
+    {
+        _newTiles[position.Item1, position.Item2] = tile;
+    }
+
+    public void MoveTile(Tuple<int, int> fromPosition, Tuple<int, int> toPosition)
+    {
+        (_newTiles[fromPosition.Item1, fromPosition.Item2], _newTiles[toPosition.Item1, toPosition.Item2]) = (
+            _newTiles[toPosition.Item1, toPosition.Item2], _newTiles[fromPosition.Item1, fromPosition.Item2]);
+    }
+
+    public Tile GetTile(Tuple<int, int> position)
+    {
+        var removedTile = _newTiles[position.Item1, position.Item2];
+        if (removedTile is null)
+            throw new NullReferenceException("Tile is empty");
+        return removedTile;
+    }
 }

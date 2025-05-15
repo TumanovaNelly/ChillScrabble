@@ -31,7 +31,7 @@ public class Game
     public int? ActivePlayerIndex { get; set; }
 
     public ChipsBag Bag { get; } = new();
-    public PlayBoard Board { get; private set; } = new();
+    public PlayBoard Board { get; } = new();
 
     public Game()
     {
@@ -44,7 +44,7 @@ public class Game
     public void AssignNextActivePlayer()
     {
         if (ActivePlayerIndex is null) 
-            throw new ArgumentNullException();
+            return;
         ActivePlayerIndex = (ActivePlayerIndex + 1) % PlayersNumber;
     }
 
@@ -59,4 +59,23 @@ public class Game
     {
         return new ValidationResult(true);
     }
+
+    public void FromSlotToBoardMove(int playerId, int tileId, Tuple<int, int> position)
+    {
+        var movedTile = Players[playerId].GetTile(tileId);
+        
+        Board.PutTile(movedTile, position);
+    }
+
+    public void FromBoardToSlotMove(int playerId, Tuple<int, int> position)
+    {
+        var movedTile = Board.GetTile(position);
+        Players[playerId].AddTile(movedTile);
+    }
+
+    public void OnBoardMove(Tuple<int, int> fromPosition, Tuple<int, int> toPosition)
+    {
+        Board.MoveTile(fromPosition, toPosition);
+    }
+    
 }

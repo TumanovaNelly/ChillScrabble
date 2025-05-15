@@ -43,17 +43,34 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
             switch (request.FromType, request.ToType)
             {
                 case ("slot", "board-cell"):
-                    Console.WriteLine("Перемещение со слота на поле");
+                    if (request.ToPosition.Row is null || request.ToPosition.Column is null)
+                        throw new ArgumentException("Координаты X или Y не могут быть null.");
+
+                    var toPosition = Tuple.Create(request.ToPosition.Row.Value, request.ToPosition.Column.Value);
+                    game.FromSlotToBoardMove(request.PlayerId, request.TileId, toPosition);
                     if (game.Board.IsBoardEmpty())
                         game.ActivePlayerIndex = request.PlayerId;
                     break;
                 case ("board-cell", "slot"):
-                    Console.WriteLine("Перемещение с поля в слот");
+                    if (request.FromPosition.Row is null || request.FromPosition.Column is null)
+                        throw new ArgumentException("Координаты X или Y не могут быть null.");
+
+                    var fromPosition = Tuple.Create(request.FromPosition.Row.Value, request.FromPosition.Column.Value);
+                    game.FromBoardToSlotMove(request.PlayerId, fromPosition);
                     if (game.Board.IsBoardEmpty())
                         game.ActivePlayerIndex = null;
                     break;
                 case ("board-cell", "board-cell"):
-                    Console.WriteLine("Перемещения на поле");
+                    if (request.FromPosition.Row is null || request.FromPosition.Column is null)
+                        throw new ArgumentException("Координаты X или Y не могут быть null.");
+                    
+                    if (request.ToPosition.Row is null || request.ToPosition.Column is null)
+                        throw new ArgumentException("Координаты X или Y не могут быть null.");
+                    
+                    var toPos = Tuple.Create(request.ToPosition.Row.Value, request.ToPosition.Column.Value);
+                    var fromPos = Tuple.Create(request.FromPosition.Row.Value, request.FromPosition.Column.Value);
+                    
+                    game.OnBoardMove(fromPos, toPos);
                     break;
                 default:
                     return Json(new { success = false, message = "Недопустимый тип перемещения" });
@@ -73,16 +90,14 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
         public string FromType { get; set; } = string.Empty;  // "slot" или "board-cell"
         public string ToType { get; set; } = string.Empty;   // "slot" или "board-cell"
         public int PlayerId { get; set; }
-        public string Letter { get; set; } = string.Empty;
-        public int Value { get; set; }
         public Position FromPosition { get; set; } = new();
         public Position ToPosition { get; set; } = new();
     }
 
     public class Position
     {
-        public int? X { get; set; }
-        public int? Y { get; set; }
+        public int? Row { get; set; }
+        public int? Column { get; set; }
     }
     
     [HttpPost]

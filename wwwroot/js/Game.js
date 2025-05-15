@@ -12,6 +12,7 @@
     } catch (error) {
         console.error("Initialization error:", error);
     }
+    
 });
 
 async function fetchActivePlayer() {
@@ -168,6 +169,7 @@ function toDroppable(element) {
 }
 
 async function sendMoveToServer(draggedElement, toElement) {
+    
     try {
         const response = await fetch('/Game/HandleTileMove', {
             method: 'POST',
@@ -177,15 +179,13 @@ async function sendMoveToServer(draggedElement, toElement) {
                 fromType: draggedElement.classList.contains('slot') ? 'slot' : 'board-cell',
                 toType: toElement.classList.contains('slot') ? 'slot' : 'board-cell',
                 playerId: draggedElement.dataset.owner,
-                letter: draggedElement.dataset.letter,
-                value: draggedElement.dataset.value,
                 fromPosition: {
-                    x: draggedElement.classList.contains('board-cell') ? draggedElement.dataset.x : null,
-                    y: draggedElement.classList.contains('board-cell') ? draggedElement.dataset.y : null
+                    row: draggedElement.classList.contains('board-cell') ? draggedElement.dataset.row : null,
+                    column: draggedElement.classList.contains('board-cell') ? draggedElement.dataset.col : null
                 },
                 toPosition: {
-                    x: toElement.classList.contains('board-cell') ? toElement.dataset.x : null,
-                    y: toElement.classList.contains('board-cell') ? toElement.dataset.y : null
+                    row: toElement.classList.contains('board-cell') ? toElement.dataset.row : null,
+                    column: toElement.classList.contains('board-cell') ? toElement.dataset.col : null
                 }
             })
         });
