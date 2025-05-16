@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using ChillScrabble.Services;
 
 namespace ChillScrabble
 {
@@ -15,6 +16,10 @@ namespace ChillScrabble
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddSingleton<WordValidationService>();
                 });
     }
 }

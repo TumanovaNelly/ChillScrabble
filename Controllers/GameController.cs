@@ -2,19 +2,23 @@
 using System.Text.Json.Serialization;
 using ChillScrabble.Extensions;
 using ChillScrabble.Models;
+using ChillScrabble.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace ChillScrabble.Controllers;
 
-public class GameController(IMemoryCache memoryCache, IWebHostEnvironment environment) : Controller
+public class GameController(
+    IMemoryCache memoryCache, 
+    IWebHostEnvironment environment,
+    WordValidationService wordValidator) : Controller
 {
     private const string GameIdCookieName = "GameId";
 
     public IActionResult Index(int gameMode)
     {
         var gameId = Guid.NewGuid().ToString();
-        var game = new Game();
+        var game = new Game(wordValidator);
 
         memoryCache.Set(gameId, game, new MemoryCacheEntryOptions
         {
@@ -26,7 +30,7 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
         {
             Expires = DateTimeOffset.Now.AddHours(1),
             HttpOnly = true,
-            Secure = !environment.IsDevelopment() // Правильная проверка окружения
+            Secure = !environment.IsDevelopment()
         });
 
         return View(game);
@@ -194,3 +198,4 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
         return game;
     }
 }
+

@@ -34,3 +34,4 @@ public class Tile(int id, char letter)
             ['Q'] = 10, ['Z'] = 10
         });
 }
+
