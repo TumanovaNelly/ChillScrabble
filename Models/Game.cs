@@ -43,8 +43,6 @@ public class Game
 
     public void AssignNextActivePlayer()
     {
-        if (ActivePlayerIndex is null) 
-            return;
         ActivePlayerIndex = (ActivePlayerIndex + 1) % PlayersNumber;
     }
 

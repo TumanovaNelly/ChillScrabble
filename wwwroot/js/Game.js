@@ -205,7 +205,8 @@ function drawNewTiles(tiles, playerId) {
     tiles.forEach((tile, index) => {
         if (index < emptySlots.length) {
             const slot = emptySlots[index];
-            slot.innerHTML = `<p>${tile.Letter}</p>`;
+            slot.innerHTML = `<p class="value">${tile.Value}</p>
+                              <p class="letter">${tile.Letter}</p>`;
             slot.classList.add("chip", "active-chip");
             slot.dataset.id = tile.Id;
             slot.dataset.letter = tile.Letter;
@@ -239,7 +240,8 @@ function resetElementToEmpty(element) {
 }
 
 function fillTargetElement(target, dragData) {
-    target.innerHTML = `<p>${dragData.letter}</p>`;
+    target.innerHTML = `<p class="value">${dragData.value}</p>
+                      <p class="letter">${dragData.letter}</p>`;
     target.classList.add('chip', 'active-chip');
     toDroppable(target);
     target.dataset.id = dragData.id;
