@@ -118,6 +118,17 @@ public class PlayBoard
         return word.ToString().ToUpper();
     }
 
+    public int CountPoints()
+    {
+        _tilesOnBoard = 1;
+        var points = 0;
+        foreach (var tile in _newTiles)
+            if (tile != null) 
+                points += tile.Value;
+        
+        return points;
+    }
+
     private bool HasTile(int row, int col)
     {
         if (row < 0 || col < 0 || row >= Size || col >= Size) return false;

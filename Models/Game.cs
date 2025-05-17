@@ -48,6 +48,7 @@ public class Game
     public void AssignNextActivePlayer()
     {
         ActivePlayerIndex = (ActivePlayerIndex + 1) % PlayersNumber;
+        Board.FixTiles();
     }
 
     public HashSet<Tile> DealTiles(int playerId)
@@ -79,6 +80,8 @@ public class Game
 
     public ValidationResult ValidateBoard()
     {
+        if (ActivePlayerIndex != null)
+            Players[(int)ActivePlayerIndex].AddPoints(Board.CountPoints());
         return new ValidationResult(true);
     }
     
