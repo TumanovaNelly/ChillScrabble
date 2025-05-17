@@ -19,26 +19,8 @@ public class ValidationResult
 
 public class Game
 { 
-    private readonly WordValidationService _wordValidator;
+    private readonly WordValidationService _wordValidator = new WordValidationService();
 
-    // Конструктор с одним параметром
-    public Game(WordValidationService wordValidator)
-    {
-        _wordValidator = wordValidator;
-    }
-
-    // Метод ValidateBoard
-    public class ValidationResult
-    {
-        public bool Success { get; }
-        public string ErrorMessage { get; }
-
-        public ValidationResult(bool success, string errorMessage = "")
-        {
-            Success = success;
-            ErrorMessage = errorMessage;
-        }
-    }
     // потом сделать наследование или что-то подобное (3 класса вместо одного)
     public const int OnlM = 0; // online mode
     public const int OffM = 1; // offline mode
@@ -65,8 +47,6 @@ public class Game
 
     public void AssignNextActivePlayer()
     {
-        if (ActivePlayerIndex is null) 
-            return;
         ActivePlayerIndex = (ActivePlayerIndex + 1) % PlayersNumber;
     }
 
@@ -93,6 +73,11 @@ public class Game
     public void OnBoardMove(Tuple<int, int> fromPosition, Tuple<int, int> toPosition)
     {
         Board.MoveTile(fromPosition, toPosition);
+    }
+
+    public ValidationResult ValidateBoard()
+    {
+        return new ValidationResult(true);
     }
     
 }
