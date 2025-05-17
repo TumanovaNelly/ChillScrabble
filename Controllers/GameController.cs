@@ -36,6 +36,7 @@ public class GameController(
         return View(game);
     }
     
+    
     [HttpPost]
     public IActionResult HandleTileMove([FromBody] TileMoveRequest request)
     {
@@ -104,35 +105,35 @@ public class GameController(
         public int? Column { get; set; }
     }
     
-    [HttpPost]
-    public IActionResult ValidateBoard()
-    {
-        try
-        {
-            var game = getGame();
-            if (game == null) return NotFound();
+    
+    //public IActionResult ValidateBoard()
+    //{
+        //try
+        //{
+            //var game = getGame();
+            //if (game == null) return NotFound();
         
             // Проверяем корректность текущего состояния поля
-            var validationResult = game.ValidateBoard();
+            //var validationResult = game.ValidateBoard();
         
-            if (!validationResult.Success)
-            {
-                return Json(new { 
-                    success = false, 
-                    message = validationResult.ErrorMessage 
-                });
-            }
+            //if (!validationResult.Success)
+            //{
+                //return Json(new { 
+                    //success = false, 
+                    //message = validationResult.ErrorMessage 
+                //});
+            //}
         
-            return Json(new { success = true });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { 
-                success = false, 
-                message = ex.Message 
-            });
-        }
-    }
+            //return Json(new { success = true });
+        //}
+        //catch (Exception ex)
+        //{
+            //return StatusCode(500, new { 
+                //success = false, 
+                //message = ex.Message 
+            //});
+        //}
+    //}
 
     [HttpPost]
     public IActionResult SwitchActivePlayer()
