@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ChillScrabble.Services;
+
 
 namespace ChillScrabble.Models;
 
@@ -16,7 +18,27 @@ public class ValidationResult
 }
 
 public class Game
-{
+{ 
+    private readonly WordValidationService _wordValidator;
+
+    // Конструктор с одним параметром
+    public Game(WordValidationService wordValidator)
+    {
+        _wordValidator = wordValidator;
+    }
+
+    // Метод ValidateBoard
+    public class ValidationResult
+    {
+        public bool Success { get; }
+        public string ErrorMessage { get; }
+
+        public ValidationResult(bool success, string errorMessage = "")
+        {
+            Success = success;
+            ErrorMessage = errorMessage;
+        }
+    }
     // потом сделать наследование или что-то подобное (3 класса вместо одного)
     public const int OnlM = 0; // online mode
     public const int OffM = 1; // offline mode
@@ -43,6 +65,8 @@ public class Game
 
     public void AssignNextActivePlayer()
     {
+        if (ActivePlayerIndex is null) 
+            return;
         ActivePlayerIndex = (ActivePlayerIndex + 1) % PlayersNumber;
     }
 
@@ -51,11 +75,6 @@ public class Game
         var newTiles = Bag.GiveOutTiles(7 - Players[playerId].Tiles.Count); // заменить 7
         Players[playerId].AddTiles(newTiles);
         return newTiles;
-    }
-
-    public ValidationResult ValidateBoard()
-    {
-        return new ValidationResult(true);
     }
 
     public void FromSlotToBoardMove(int playerId, int tileId, Tuple<int, int> position)
