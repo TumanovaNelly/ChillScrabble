@@ -33,9 +33,9 @@ public class Game
     public ChipsBag Bag { get; } = new();
     public PlayBoard Board { get; } = new();
 
-    public Game()
+    public Game(int mode)
     {
-        Mode = 1; //////
+        Mode = mode; //////
 
         for (int i = 0; i < PlayersNumber; ++i)
             Players.Add(new Player($"CHILL_GUY_{i}"));

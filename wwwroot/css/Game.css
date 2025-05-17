@@ -31,10 +31,12 @@
 
 .board-cell .letter {
     font-size: 3.2vh;
+    cursor: default;
 }
 
 .board-cell .value {
     font-size: 1.9vh;
+    cursor: default;
 }
 /********* Инфо о игроке *********/
 
@@ -102,6 +104,7 @@
     font-size: 2.2vh;
     padding-bottom: 1.5vh;
     color: var(--red);
+    cursor: pointer;
 }
 
 /********* Левая панель *********/

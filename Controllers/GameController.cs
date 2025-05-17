@@ -14,7 +14,7 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
     public IActionResult Index(int gameMode)
     {
         var gameId = Guid.NewGuid().ToString();
-        var game = new Game();
+        var game = new Game(gameMode);
 
         memoryCache.Set(gameId, game, new MemoryCacheEntryOptions
         {

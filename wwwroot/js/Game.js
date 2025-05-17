@@ -59,8 +59,6 @@ async function handleReadyClick() {
 
         updateActivePlayerUI(switchResult.newActivePlayer);
         fixChipsOnBoard();
-
-        alert(`Ход принят! Игрок CHILL_GUY_${switchResult.oldActivePlayer} получил новые фишки. Теперь ход игрока CHILL_GUY_${switchResult.newActivePlayer}`);
     } catch (error) {
         console.error("Error in ready button handler:", error);
     }
