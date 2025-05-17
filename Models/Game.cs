@@ -53,7 +53,9 @@ public class Game
     public HashSet<Tile> DealTiles(int playerId)
     {
         var newTiles = Bag.GiveOutTiles(7 - Players[playerId].Tiles.Count); // заменить 7
+        
         Players[playerId].AddTiles(newTiles);
+
         return newTiles;
     }
 

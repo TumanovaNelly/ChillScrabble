@@ -54,7 +54,8 @@ async function handleReadyClick() {
             throw new Error(switchResult.message || "Ошибка смены игрока");
 
         console.log(switchResult);
-
+        
+        updatePlayerScore(switchResult.oldActivePlayer, switchResult.points);
         await fetchNewTiles(switchResult.oldActivePlayer);
 
         updateActivePlayerUI(switchResult.newActivePlayer);
@@ -85,6 +86,29 @@ async function switchActivePlayer() {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     return await response.json();
+}
+
+function updatePlayerScore(playerIndex, newScore) {
+    if (playerIndex == null)
+        return;
+    // Находим блок игрока по data-player-id
+    const playerInfo = document.querySelector(`.player-info[data-player-id="${playerIndex}"]`);
+
+    if (!playerInfo) {
+        console.error(`Игрок с индексом ${playerIndex} не найден!`);
+        return;
+    }
+
+    // Находим <strong> внутри этого блока
+    const scoreElement = playerInfo.querySelector("strong");
+
+    if (!scoreElement) {
+        console.error("Элемент счёта не найден!");
+        return;
+    }
+
+    // Обновляем значение
+    scoreElement.textContent = newScore;
 }
 
 function updateActivePlayerUI(playerId) {
@@ -199,7 +223,7 @@ async function sendMoveToServer(draggedElement, toElement) {
 }
 
 function drawNewTiles(tiles, playerId) {
-    const emptySlots = document.querySelectorAll(`.slot[data-player='${playerId}']`);
+    const emptySlots = document.querySelectorAll(`.slot[data-player='${playerId}']:not(.active-chip)`);
     tiles.forEach((tile, index) => {
         if (index < emptySlots.length) {
             const slot = emptySlots[index];

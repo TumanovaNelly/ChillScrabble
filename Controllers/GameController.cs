@@ -142,10 +142,12 @@ public class GameController(IMemoryCache memoryCache, IWebHostEnvironment enviro
         
             game.AssignNextActivePlayer();
         
+            // сюда в points нужно закидывать баллы сходившего игрока, чтобы на клиенте обновился счет
             return Json(new { 
                 success = true, 
                 oldActivePlayer = oldActive,
-                newActivePlayer = game.ActivePlayerIndex 
+                newActivePlayer = game.ActivePlayerIndex,
+                points = (oldActive is not null) ? game.Players[(int)oldActive].Score : (int?)null
             });
         }
         catch (Exception ex)

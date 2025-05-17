@@ -80,7 +80,7 @@ public class ChipsBag
 
         for (int i = 0; i < count; ++i)
         {
-            int randomIndex = _random.Next(0, bagList.Count);
+            int randomIndex = _random.Next(0, bagList.Count - 1);
             outTiles.Add(bagList[randomIndex]);
             Bag.Remove(bagList[randomIndex]);
             bagList.RemoveAt(randomIndex);
